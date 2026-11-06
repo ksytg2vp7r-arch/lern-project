@@ -21,8 +21,9 @@ a:hover{text-decoration-color:var(--dunkel)}
 /* Kopf */
 .top{padding:1.5rem 0 0;text-align:center}
 .top .wrap{border-bottom:4px double var(--rule);padding-bottom:.9rem}
-.brand{display:inline-flex;align-items:center;gap:.7rem;font-family:var(--serif);font-weight:700;font-size:1.1rem;letter-spacing:.4em;text-transform:uppercase;text-decoration:none}
-.brand img{width:36px;height:36px;display:block}
+/* Logo */
+.brand{display:inline-block;line-height:0;text-decoration:none}
+.brand img{height:2.9rem;width:auto;display:block}
 .nav{display:flex;flex-wrap:wrap;justify-content:center;gap:.2rem 1rem;margin-top:.6rem}
 .nav a{font-size:1rem;text-decoration:none;padding:.35rem 0;border-bottom:2px solid transparent}
 .nav a:hover{border-bottom-color:var(--terrakotta)}
