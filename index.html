@@ -15,11 +15,9 @@
 </head>
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
-<header class="wrap">
-<a class="brand" href="#inhalt" aria-label="Tischnote"><img src="favicon.svg" alt="" width="36" height="36">Tischnote</a>
-</header>
+<header class="top"><div class="wrap"><a class="brand" href="#inhalt" aria-label="Tischnote, zum Seitenanfang"><img src="favicon.svg" alt="" width="36" height="36"><span>Tischnote</span></a>
+<nav class="nav" aria-label="Seitenabschnitte"><a href="#leistungen">Leistungen</a><a href="#ablauf">Ablauf</a><a href="#ueber">Über mich</a><a href="#kontakt">Kontakt</a></nav></div></header>
 <main id="inhalt">
-
 <section class="hero">
 <div class="wrap">
 <h1>Sie kümmern sich um Ihre Gäste. Ich um Ihren Online-Auftritt.</h1>
@@ -30,9 +28,8 @@
 </div>
 </div>
 </section>
-<hr class="rule">
 
-<section aria-labelledby="leistungen">
+<section class="sec leistungen" aria-labelledby="leistungen">
 <div class="wrap">
 <h2 id="leistungen">Was ich für Sie übernehme</h2>
 <div class="cards">
@@ -43,9 +40,8 @@
 </div>
 </div>
 </section>
-<hr class="rule">
 
-<section aria-labelledby="ablauf">
+<section class="sec ablauf" aria-labelledby="ablauf">
 <div class="wrap">
 <h2 id="ablauf">So läuft es ab</h2>
 <ol class="steps">
@@ -55,44 +51,40 @@
 </ol>
 </div>
 </section>
-<hr class="rule">
 
-<section aria-labelledby="beispiel">
+<section class="sec beispiel" aria-labelledby="beispiel">
 <div class="wrap">
 <h2 id="beispiel">Ein Beispiel</h2>
+<div>
 <div class="example">
-<figure class="bubble gast" style="margin-inline:0">
-<p class="label">Bewertung eines Gastes (Beispiel)</p>
-<blockquote>„Sehr leckeres Essen und nette Bedienung, nur die Wartezeit am Samstag war etwas lang."</blockquote>
-</figure>
-<figure class="bubble antwort" style="margin-inline:0">
-<p class="label">Mögliche Antwort</p>
-<blockquote>„Vielen Dank für Ihr Lob und Ihre ehrliche Rückmeldung! Es freut uns sehr, dass es Ihnen geschmeckt hat. Am Wochenende ist bei uns viel los, wir arbeiten daran, die Wartezeiten kürzer zu halten. Wir freuen uns auf Ihren nächsten Besuch."</blockquote>
-</figure>
+<figure class="bubble gast"><p class="label">Bewertung eines Gastes (Beispiel)</p><blockquote>„Sehr leckeres Essen und nette Bedienung, nur die Wartezeit am Samstag war etwas lang."</blockquote></figure>
+<figure class="bubble antwort"><p class="label">Mögliche Antwort</p><blockquote>„Vielen Dank für Ihr Lob und Ihre ehrliche Rückmeldung! Es freut uns sehr, dass es Ihnen geschmeckt hat. Am Wochenende ist bei uns viel los, wir arbeiten daran, die Wartezeiten kürzer zu halten. Wir freuen uns auf Ihren nächsten Besuch."</blockquote></figure>
 </div>
 <p class="small">(Frei erfundenes Beispiel, kein echtes Restaurant.)</p>
 </div>
+</div>
 </section>
-<hr class="rule">
 
-<section aria-labelledby="ueber">
-<div class="wrap about">
+<section class="sec ueber" aria-labelledby="ueber">
+<div class="wrap">
+<h2 id="ueber">Über mich</h2>
+<div class="about">
 <!-- Foto einsetzen: den div durch <div class="photo"><img src="daniel.jpg" alt="Daniel Schröder" width="400" height="400"></div> ersetzen -->
 <div class="photo" role="img" aria-label="Foto von Daniel Schröder (Platzhalter)">DS</div>
-<div>
-<h2 id="ueber">Über mich</h2>
+<div class="about-text">
 <p>Ich bin Daniel Schröder und unterstütze kleine Restaurants bei ihrer Online-Kommunikation.</p>
 <p>Ich liebe gutes Essen, überlasse den Herd aber gern den Profis. Früher habe ich als Berater für Finanzdienstleister gearbeitet. Heute berate ich Restaurants bei ihrem Auftritt im Netz, damit Ihre Gäste Sie dort so erleben, wie Sie sie im Lokal empfangen: herzlich und aufmerksam.</p>
 </div>
 </div>
+</div>
 </section>
 
-<section aria-labelledby="kontakt" style="padding-top:0">
+<section class="sec kontakt" aria-labelledby="kontakt">
 <div class="wrap">
-<div class="contact">
+<div class="kontaktbox">
 <h2 id="kontakt">Kontakt</h2>
 <p>Schreiben Sie mir oder buchen Sie direkt ein kostenloses Erstgespräch.</p>
-<ul>
+<ul class="clist">
 <li>E-Mail: <a href="mailto:daniel@tischnote.de">daniel@tischnote.de</a></li>
 <li>Telefon: <span class="todo">[Handynummer]</span></li>
 <li>Termin buchen: <a href="https://cal.com/tischnote">cal.com/tischnote</a></li>
@@ -104,11 +96,10 @@
 </div>
 </div>
 </section>
-
 </main>
 <footer>
 <div class="wrap">
-<p style="margin:0">&copy; Tischnote &middot; Daniel Schr&ouml;der</p>
+<p>&copy; Tischnote &middot; Daniel Schr&ouml;der</p>
 <nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a> &nbsp;&middot;&nbsp; <a href="datenschutz.html">Datenschutz</a></nav>
 </div>
 </footer>
