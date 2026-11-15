@@ -1,0 +1,44 @@
+# Startet Datenbank und Anwendung.
+#   Nur Datenbank (für Tests und Entwicklung):  docker compose up -d db
+#   Alles:                                       docker compose up -d --build
+# HTTPS (Caddy) und Datensicherung kommen in Etappe 6 dazu.
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pflege_owner
+      POSTGRES_PASSWORD: ${DB_OWNER_PASSWORD:?DB_OWNER_PASSWORD fehlt in .env}
+      POSTGRES_DB: ${DB_NAME:-pflege}
+    volumes:
+      - dbdaten:/var/lib/postgresql/data
+    ports:
+      # Nur vom eigenen Rechner aus erreichbar, nicht aus dem Internet
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pflege_owner -d ${DB_NAME:-pflege}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  dbdaten:

@@ -1,0 +1,1390 @@
+{
+  "id": "ae51e53c-b21b-43c5-8da8-de3b54b1675f",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.anrufe": {
+      "name": "anrufe",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "plattform": {
+          "name": "plattform",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "plattform_anruf_id": {
+          "name": "plattform_anruf_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "anruf_zeit": {
+          "name": "anruf_zeit",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "eingegangen_am": {
+          "name": "eingegangen_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "kategorie": {
+          "name": "kategorie",
+          "type": "kategorie",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dringlichkeit": {
+          "name": "dringlichkeit",
+          "type": "dringlichkeit",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kategorie_original": {
+          "name": "kategorie_original",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dringlichkeit_original": {
+          "name": "dringlichkeit_original",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "anrufer_name_enc": {
+          "name": "anrufer_name_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rueckrufnummer_enc": {
+          "name": "rueckrufnummer_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zusammenfassung_enc": {
+          "name": "zusammenfassung_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "unvollstaendig": {
+          "name": "unvollstaendig",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "status": {
+          "name": "status",
+          "type": "anruf_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'offen'"
+        },
+        "notiz_enc": {
+          "name": "notiz_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status_geaendert_am": {
+          "name": "status_geaendert_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status_geaendert_von": {
+          "name": "status_geaendert_von",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gesehen_am": {
+          "name": "gesehen_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "benachrichtigung_fehlgeschlagen": {
+          "name": "benachrichtigung_fehlgeschlagen",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "notfall_unbestaetigt": {
+          "name": "notfall_unbestaetigt",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {
+        "anrufe_einmalig": {
+          "name": "anrufe_einmalig",
+          "columns": [
+            {
+              "expression": "pflegedienst_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "plattform",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "plattform_anruf_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "anrufe_liste": {
+          "name": "anrufe_liste",
+          "columns": [
+            {
+              "expression": "pflegedienst_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "anruf_zeit",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "anrufe_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "anrufe_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "anrufe",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.aufgaben": {
+      "name": "aufgaben",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "art": {
+          "name": "art",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bezug_id": {
+          "name": "bezug_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "faellig_am": {
+          "name": "faellig_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "versuche": {
+          "name": "versuche",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "gesperrt_am": {
+          "name": "gesperrt_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "erledigt_am": {
+          "name": "erledigt_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "erstellt_am": {
+          "name": "erstellt_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "aufgaben_faellig": {
+          "name": "aufgaben_faellig",
+          "columns": [
+            {
+              "expression": "faellig_am",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"aufgaben\".\"erledigt_am\" is null",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "aufgaben_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "aufgaben_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "aufgaben",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.benachrichtigungen": {
+      "name": "benachrichtigungen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "anruf_id": {
+          "name": "anruf_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "empfaenger_id": {
+          "name": "empfaenger_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kanal": {
+          "name": "kanal",
+          "type": "kanal",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "art": {
+          "name": "art",
+          "type": "benachrichtigung_art",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "benachrichtigung_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'wartend'"
+        },
+        "versuche": {
+          "name": "versuche",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "letzter_fehler_code": {
+          "name": "letzter_fehler_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "erstellt_am": {
+          "name": "erstellt_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "gesendet_am": {
+          "name": "gesendet_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "benachrichtigungen_anruf": {
+          "name": "benachrichtigungen_anruf",
+          "columns": [
+            {
+              "expression": "anruf_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "benachrichtigungen_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "benachrichtigungen_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "benachrichtigungen",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "benachrichtigungen_anruf_id_anrufe_id_fk": {
+          "name": "benachrichtigungen_anruf_id_anrufe_id_fk",
+          "tableFrom": "benachrichtigungen",
+          "tableTo": "anrufe",
+          "columnsFrom": [
+            "anruf_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "benachrichtigungen_empfaenger_id_empfaenger_id_fk": {
+          "name": "benachrichtigungen_empfaenger_id_empfaenger_id_fk",
+          "tableFrom": "benachrichtigungen",
+          "tableTo": "empfaenger",
+          "columnsFrom": [
+            "empfaenger_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.benutzer": {
+      "name": "benutzer",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "passwort_hash": {
+          "name": "passwort_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "totp_geheimnis_enc": {
+          "name": "totp_geheimnis_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "totp_aktiv": {
+          "name": "totp_aktiv",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "fehlversuche": {
+          "name": "fehlversuche",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "gesperrt_bis": {
+          "name": "gesperrt_bis",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "erstellt_am": {
+          "name": "erstellt_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "benutzer_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "benutzer_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "benutzer",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "benutzer_email_unique": {
+          "name": "benutzer_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "email_klein": {
+          "name": "email_klein",
+          "value": "\"benutzer\".\"email\" = lower(\"benutzer\".\"email\")"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.bestaetigungscodes": {
+      "name": "bestaetigungscodes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "anruf_id": {
+          "name": "anruf_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "benachrichtigung_id": {
+          "name": "benachrichtigung_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code_hash": {
+          "name": "code_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gueltig_bis": {
+          "name": "gueltig_bis",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "benutzt_am": {
+          "name": "benutzt_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "bestaetigungscodes_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "bestaetigungscodes_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "bestaetigungscodes",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "bestaetigungscodes_anruf_id_anrufe_id_fk": {
+          "name": "bestaetigungscodes_anruf_id_anrufe_id_fk",
+          "tableFrom": "bestaetigungscodes",
+          "tableTo": "anrufe",
+          "columnsFrom": [
+            "anruf_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "bestaetigungscodes_benachrichtigung_id_benachrichtigungen_id_fk": {
+          "name": "bestaetigungscodes_benachrichtigung_id_benachrichtigungen_id_fk",
+          "tableFrom": "bestaetigungscodes",
+          "tableTo": "benachrichtigungen",
+          "columnsFrom": [
+            "benachrichtigung_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "bestaetigungscodes_code_hash_unique": {
+          "name": "bestaetigungscodes_code_hash_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "code_hash"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.betreiberwarnungen": {
+      "name": "betreiberwarnungen",
+      "schema": "",
+      "columns": {
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "art": {
+          "name": "art",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zuletzt_gesendet_am": {
+          "name": "zuletzt_gesendet_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "offene_vorfaelle": {
+          "name": "offene_vorfaelle",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "betreiberwarnungen_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "betreiberwarnungen_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "betreiberwarnungen",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "betreiberwarnungen_pflegedienst_id_art_pk": {
+          "name": "betreiberwarnungen_pflegedienst_id_art_pk",
+          "columns": [
+            "pflegedienst_id",
+            "art"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.empfaenger": {
+      "name": "empfaenger",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bezeichnung": {
+          "name": "bezeichnung",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kanal": {
+          "name": "kanal",
+          "type": "kanal",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adresse_enc": {
+          "name": "adresse_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "empfaenger_pflegedienst": {
+          "name": "empfaenger_pflegedienst",
+          "columns": [
+            {
+              "expression": "pflegedienst_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "empfaenger_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "empfaenger_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "empfaenger",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pflegedienste": {
+      "name": "pflegedienste",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "kennung": {
+          "name": "kennung",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "plattform": {
+          "name": "plattform",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'demo'"
+        },
+        "webhook_token_hash": {
+          "name": "webhook_token_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "webhook_geheimnis_enc": {
+          "name": "webhook_geheimnis_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "loeschfrist_tage": {
+          "name": "loeschfrist_tage",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 30
+        },
+        "sms_mit_rueckrufnummer": {
+          "name": "sms_mit_rueckrufnummer",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "email_mit_details": {
+          "name": "email_mit_details",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "erstellt_am": {
+          "name": "erstellt_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "pflegedienste_kennung_unique": {
+          "name": "pflegedienste_kennung_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "kennung"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "loeschfrist_bereich": {
+          "name": "loeschfrist_bereich",
+          "value": "\"pflegedienste\".\"loeschfrist_tage\" between 1 and 365"
+        },
+        "kennung_format": {
+          "name": "kennung_format",
+          "value": "\"pflegedienste\".\"kennung\" ~ '^[a-z0-9-]{3,40}$'"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.sitzungen": {
+      "name": "sitzungen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "token_hash": {
+          "name": "token_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "benutzer_id": {
+          "name": "benutzer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zwei_faktor_bestanden": {
+          "name": "zwei_faktor_bestanden",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "erstellt_am": {
+          "name": "erstellt_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "zuletzt_aktiv_am": {
+          "name": "zuletzt_aktiv_am",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sitzungen_benutzer_id_benutzer_id_fk": {
+          "name": "sitzungen_benutzer_id_benutzer_id_fk",
+          "tableFrom": "sitzungen",
+          "tableTo": "benutzer",
+          "columnsFrom": [
+            "benutzer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "sitzungen_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "sitzungen_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "sitzungen",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "sitzungen_token_hash_unique": {
+          "name": "sitzungen_token_hash_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "token_hash"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tagesstatistik": {
+      "name": "tagesstatistik",
+      "schema": "",
+      "columns": {
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tag": {
+          "name": "tag",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kategorie": {
+          "name": "kategorie",
+          "type": "kategorie",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "anzahl": {
+          "name": "anzahl",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tagesstatistik_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "tagesstatistik_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "tagesstatistik",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "tagesstatistik_pflegedienst_id_tag_kategorie_pk": {
+          "name": "tagesstatistik_pflegedienst_id_tag_kategorie_pk",
+          "columns": [
+            "pflegedienst_id",
+            "tag",
+            "kategorie"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.verteilregeln": {
+      "name": "verteilregeln",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zweck": {
+          "name": "zweck",
+          "type": "regel_zweck",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kategorie": {
+          "name": "kategorie",
+          "type": "kategorie",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "empfaenger_id": {
+          "name": "empfaenger_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "verteilregeln_pflegedienst": {
+          "name": "verteilregeln_pflegedienst",
+          "columns": [
+            {
+              "expression": "pflegedienst_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "verteilregeln_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "verteilregeln_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "verteilregeln",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "verteilregeln_empfaenger_id_empfaenger_id_fk": {
+          "name": "verteilregeln_empfaenger_id_empfaenger_id_fk",
+          "tableFrom": "verteilregeln",
+          "tableTo": "empfaenger",
+          "columnsFrom": [
+            "empfaenger_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "kategorie_nur_bei_kategorieregel": {
+          "name": "kategorie_nur_bei_kategorieregel",
+          "value": "(\"verteilregeln\".\"zweck\" = 'kategorie') = (\"verteilregeln\".\"kategorie\" is not null)"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.vorfallzaehler": {
+      "name": "vorfallzaehler",
+      "schema": "",
+      "columns": {
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tag": {
+          "name": "tag",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "art": {
+          "name": "art",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "anzahl": {
+          "name": "anzahl",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "vorfallzaehler_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "vorfallzaehler_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "vorfallzaehler",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "vorfallzaehler_pflegedienst_id_tag_art_pk": {
+          "name": "vorfallzaehler_pflegedienst_id_tag_art_pk",
+          "columns": [
+            "pflegedienst_id",
+            "tag",
+            "art"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.zugriffsprotokoll": {
+      "name": "zugriffsprotokoll",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "pflegedienst_id": {
+          "name": "pflegedienst_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "benutzer_id": {
+          "name": "benutzer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "aktion": {
+          "name": "aktion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "anruf_id": {
+          "name": "anruf_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zeitpunkt": {
+          "name": "zeitpunkt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "zugriffsprotokoll_zeit": {
+          "name": "zugriffsprotokoll_zeit",
+          "columns": [
+            {
+              "expression": "pflegedienst_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "zeitpunkt",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "zugriffsprotokoll_pflegedienst_id_pflegedienste_id_fk": {
+          "name": "zugriffsprotokoll_pflegedienst_id_pflegedienste_id_fk",
+          "tableFrom": "zugriffsprotokoll",
+          "tableTo": "pflegedienste",
+          "columnsFrom": [
+            "pflegedienst_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "zugriffsprotokoll_benutzer_id_benutzer_id_fk": {
+          "name": "zugriffsprotokoll_benutzer_id_benutzer_id_fk",
+          "tableFrom": "zugriffsprotokoll",
+          "tableTo": "benutzer",
+          "columnsFrom": [
+            "benutzer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.anruf_status": {
+      "name": "anruf_status",
+      "schema": "public",
+      "values": [
+        "offen",
+        "gesehen",
+        "erledigt"
+      ]
+    },
+    "public.benachrichtigung_art": {
+      "name": "benachrichtigung_art",
+      "schema": "public",
+      "values": [
+        "normal",
+        "notfall_sms",
+        "rueckfall_email",
+        "eskalation_sms"
+      ]
+    },
+    "public.benachrichtigung_status": {
+      "name": "benachrichtigung_status",
+      "schema": "public",
+      "values": [
+        "wartend",
+        "gesendet",
+        "fehlgeschlagen",
+        "abgebrochen"
+      ]
+    },
+    "public.dringlichkeit": {
+      "name": "dringlichkeit",
+      "schema": "public",
+      "values": [
+        "niedrig",
+        "mittel",
+        "hoch",
+        "unklar"
+      ]
+    },
+    "public.kanal": {
+      "name": "kanal",
+      "schema": "public",
+      "values": [
+        "email",
+        "sms"
+      ]
+    },
+    "public.kategorie": {
+      "name": "kategorie",
+      "schema": "public",
+      "values": [
+        "neukunde",
+        "terminaenderung",
+        "krankmeldung_mitarbeiter",
+        "arzt_apotheke_kasse",
+        "bewerbung",
+        "notfall",
+        "sonstiges"
+      ]
+    },
+    "public.regel_zweck": {
+      "name": "regel_zweck",
+      "schema": "public",
+      "values": [
+        "kategorie",
+        "standard",
+        "notfall_erster",
+        "notfall_zweiter",
+        "tagesuebersicht"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
